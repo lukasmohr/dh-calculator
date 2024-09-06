@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 type WindStrength = 'TAUDL' | 'TAUDM' | 'TAUDH'
 type BoatName = 'Astarte II' | 'Stony' | 'Xbox' | 'Dixi 4' | 'Esbern Snarre' | 'Intermezzo' | 'Sirena' | 'Easy Lover' | 'Al Capone 2.0' | 'Quinta Light'
@@ -100,68 +99,76 @@ export default function RaceCalculator() {
   }
 
   return (
-    <Card className="w-full mx-auto border-none border-r-0 shadow-none">
-      <CardHeader>
-        <CardTitle className="text-2xl font-bold">DH-DM 2024</CardTitle>
-        <p className="text-sm text-gray-500">Race Calculator</p>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          <Select onValueChange={(value) => setSelectedBoat(value as BoatName)}>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select your boat" />
-            </SelectTrigger>
-            <SelectContent>
-              {Object.keys(boatRatings.TAUDL).map((boat) => (
-                <SelectItem key={boat} value={boat}>
-                  {boat}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+    <div className="container mx-auto px-4 py-8">
+      <header className="text-center mb-8">
+        <h1 className="text-4xl font-bold text-gray-900">DH-DM 2024</h1>
+        <p className="text-xl text-gray-600 mt-2">Race Calculator</p>
+      </header>
 
-          <Select onValueChange={(value) => setWindStrength(value as WindStrength)} defaultValue="TAUDL">
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select wind strength" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="TAUDL">Light Wind</SelectItem>
-              <SelectItem value="TAUDM">Medium Wind</SelectItem>
-              <SelectItem value="TAUDH">Strong Wind</SelectItem>
-            </SelectContent>
-          </Select>
-
+      <div className="max-w-2xl mx-auto bg-white shadow-md rounded-lg p-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Your Boat</label>
+            <Select onValueChange={(value) => setSelectedBoat(value as BoatName)}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select your boat" />
+              </SelectTrigger>
+              <SelectContent>
+                {Object.keys(boatRatings.TAUDL).map((boat) => (
+                  <SelectItem key={boat} value={boat}>
+                    {boat}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Wind Strength</label>
+            <Select onValueChange={(value) => setWindStrength(value as WindStrength)} defaultValue="TAUDL">
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select wind strength" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="TAUDL">Light Wind</SelectItem>
+                <SelectItem value="TAUDM">Medium Wind</SelectItem>
+                <SelectItem value="TAUDH">Strong Wind</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+        <div className="mb-6">
+          <label htmlFor="raceLength" className="block text-sm font-medium text-gray-700 mb-1">Race Length (nautical miles)</label>
           <Input
+            id="raceLength"
             type="number"
-            placeholder="Race length (nautical miles)"
+            placeholder="Enter race length"
             value={raceLength}
             onChange={(e) => setRaceLength(e.target.value)}
           />
-
-          <Button onClick={calculateTimeDifferences} className="w-full">
-            Calculate
-          </Button>
-
-          {results.length > 0 && (
-            <div className="mt-4">
-              <h3 className="text-lg font-semibold mb-2">Results:</h3>
-              <p className="text-sm text-gray-600 mb-2">
-                Negative times indicate boats faster than yours, positive times are slower.
-              </p>
-              <ul className="space-y-2">
-                {results.map(({ boat, timeDifference }) => (
-                  <li key={boat} className="flex justify-between">
-                    <span>{boat}:</span>
-                    <span className={timeDifference < 0 ? "text-red-500" : "text-green-500"}>
-                      {formatTimeDifference(timeDifference)}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
         </div>
-      </CardContent>
-    </Card>
+        <Button onClick={calculateTimeDifferences} className="w-full mb-6">
+          Calculate
+        </Button>
+
+        {results.length > 0 && (
+          <div className="mt-8">
+            <h2 className="text-2xl font-semibold mb-4">Results</h2>
+            <p className="text-sm text-gray-600 mb-4">
+              Negative times indicate boats faster than yours, positive times are slower.
+            </p>
+            <ul className="space-y-2">
+              {results.map(({ boat, timeDifference }) => (
+                <li key={boat} className="flex justify-between items-center py-2 border-b">
+                  <span className="font-medium">{boat}</span>
+                  <span className={`text-lg font-semibold ${timeDifference < 0 ? "text-red-500" : "text-green-500"}`}>
+                    {formatTimeDifference(timeDifference)}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    </div>
   )
 }
