@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import React, { useState } from 'react'
 import {
@@ -12,7 +12,16 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-const boatRatings = {
+type WindStrength = 'TAUDL' | 'TAUDM' | 'TAUDH'
+type BoatName = 'Astarte II' | 'Stony' | 'Xbox' | 'Dixi 4' | 'Esbern Snarre' | 'Intermezzo' | 'Sirena' | 'Easy Lover' | 'Al Capone 2.0' | 'Quinta Light'
+
+type BoatRatings = {
+  [key in WindStrength]: {
+    [key in BoatName]: number
+  }
+}
+
+const boatRatings: BoatRatings = {
   TAUDL: {
     "Astarte II": 857.2,
     "Stony": 830.6,
@@ -60,21 +69,26 @@ function formatTimeDifference(seconds: number): string {
 }
 
 export default function RaceCalculator() {
-  const [selectedBoat, setSelectedBoat] = useState("")
-  const [windStrength, setWindStrength] = useState("TAUDL")
-  const [raceLength, setRaceLength] = useState("")
-  const [results, setResults] = useState<{boat: string, timeDifference: number}[]>([])
+  const [selectedBoat, setSelectedBoat] = useState<BoatName | ''>('')
+  const [windStrength, setWindStrength] = useState<WindStrength>('TAUDL')
+  const [raceLength, setRaceLength] = useState('')
+  const [results, setResults] = useState<{boat: BoatName, timeDifference: number}[]>([])
 
   const calculateTimeDifferences = () => {
-    const userBoatRating = boatRatings[windStrength][selectedBoat]
-    const raceLengthNum = parseFloat(raceLength)
-
-    if (!userBoatRating || isNaN(raceLengthNum)) {
-      alert("Please select a boat, wind strength, and enter a valid race length.")
+    if (!selectedBoat) {
+      alert("Please select a boat.")
       return
     }
 
-    const newResults = Object.entries(boatRatings[windStrength])
+    const userBoatRating = boatRatings[windStrength][selectedBoat]
+    const raceLengthNum = parseFloat(raceLength)
+
+    if (isNaN(raceLengthNum)) {
+      alert("Please enter a valid race length.")
+      return
+    }
+
+    const newResults = (Object.entries(boatRatings[windStrength]) as [BoatName, number][])
       .filter(([boat]) => boat !== selectedBoat)
       .map(([boat, rating]) => {
         const timeDifference = (rating - userBoatRating) * raceLengthNum
@@ -93,7 +107,7 @@ export default function RaceCalculator() {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          <Select onValueChange={setSelectedBoat}>
+          <Select onValueChange={(value) => setSelectedBoat(value as BoatName)}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Select your boat" />
             </SelectTrigger>
@@ -106,7 +120,7 @@ export default function RaceCalculator() {
             </SelectContent>
           </Select>
 
-          <Select onValueChange={setWindStrength} defaultValue="TAUDL">
+          <Select onValueChange={(value) => setWindStrength(value as WindStrength)} defaultValue="TAUDL">
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Select wind strength" />
             </SelectTrigger>
