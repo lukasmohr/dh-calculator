@@ -153,14 +153,14 @@ export default function RaceCalculator() {
 
         {results.length > 0 && (
           <div className="mt-8">
-            <h2 className="text-2xl font-semibold mb-4">Results</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-gray-800">Results</h2>
             <p className="text-sm text-gray-600 mb-4">
               Negative times indicate boats faster than yours, positive times are slower.
             </p>
             <ul className="space-y-2">
               {results.map(({ boat, timeDifference }) => (
                 <li key={boat} className="flex justify-between items-center py-2 border-b">
-                  <span className="font-medium">{boat}</span>
+                  <span className="font-medium text-gray-800">{boat}</span>
                   <span className={`text-lg font-semibold ${timeDifference < 0 ? "text-green-500" : "text-red-500"}`}>
                     {formatTimeDifference(timeDifference)}
                   </span>
