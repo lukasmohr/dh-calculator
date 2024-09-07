@@ -110,8 +110,8 @@ export default function RaceCalculator() {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Your Boat</label>
             <Select onValueChange={(value) => setSelectedBoat(value as BoatName)}>
-              <SelectTrigger className="w-full text-gray-800">
-                <SelectValue placeholder="Select your boat" className="text-gray-800" />
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select your boat" />
               </SelectTrigger>
               <SelectContent>
                 {Object.keys(boatRatings.TAUDL).map((boat) => (
@@ -125,8 +125,8 @@ export default function RaceCalculator() {
           <div>
             <label className="block text-sm font-medium text-gray-800 placeholder:text-grey-800 mb-1">Wind Strength</label>
             <Select onValueChange={(value) => setWindStrength(value as WindStrength)} defaultValue="TAUDL">
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select wind strength" />
+              <SelectTrigger className="w-full text-gray-800 !text-opacity-100">
+                <SelectValue placeholder="Select wind strength" className="text-gray-800 !text-opacity-100" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="TAUDL">TAUDL</SelectItem>
