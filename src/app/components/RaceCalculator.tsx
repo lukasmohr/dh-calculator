@@ -123,15 +123,15 @@ export default function RaceCalculator() {
             </Select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Wind Strength</label>
+            <label className="block text-sm font-medium text-gray-700 placeholder:text-blue-400 mb-1">Wind Strength</label>
             <Select onValueChange={(value) => setWindStrength(value as WindStrength)} defaultValue="TAUDL">
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select wind strength" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="TAUDL">Light Wind</SelectItem>
-                <SelectItem value="TAUDM">Medium Wind</SelectItem>
-                <SelectItem value="TAUDH">Strong Wind</SelectItem>
+                <SelectItem value="TAUDL">TAUDL</SelectItem>
+                <SelectItem value="TAUDM">TAUDM</SelectItem>
+                <SelectItem value="TAUDH">TAUDH</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -144,6 +144,7 @@ export default function RaceCalculator() {
             placeholder="Enter race length"
             value={raceLength}
             onChange={(e) => setRaceLength(e.target.value)}
+            className="text-gray-800 placeholder-gray-500" // Add this line
           />
         </div>
         <Button onClick={calculateTimeDifferences} className="w-full mb-6">
@@ -160,7 +161,7 @@ export default function RaceCalculator() {
               {results.map(({ boat, timeDifference }) => (
                 <li key={boat} className="flex justify-between items-center py-2 border-b">
                   <span className="font-medium">{boat}</span>
-                  <span className={`text-lg font-semibold ${timeDifference < 0 ? "text-red-500" : "text-green-500"}`}>
+                  <span className={`text-lg font-semibold ${timeDifference < 0 ? "text-green-500" : "text-red-500"}`}>
                     {formatTimeDifference(timeDifference)}
                   </span>
                 </li>
