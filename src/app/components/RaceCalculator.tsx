@@ -123,7 +123,7 @@ export default function RaceCalculator() {
             </Select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 placeholder:text-blue-400 mb-1">Wind Strength</label>
+            <label className="block text-sm font-medium text-gray-800 placeholder:text-grey-800 mb-1">Wind Strength</label>
             <Select onValueChange={(value) => setWindStrength(value as WindStrength)} defaultValue="TAUDL">
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select wind strength" />
@@ -144,7 +144,7 @@ export default function RaceCalculator() {
             placeholder="Enter race length"
             value={raceLength}
             onChange={(e) => setRaceLength(e.target.value)}
-            className="text-gray-800 placeholder-gray-500" // Add this line
+            className="text-gray-800 placeholder-gray-800" // Add this line
           />
         </div>
         <Button onClick={calculateTimeDifferences} className="w-full mb-6">
