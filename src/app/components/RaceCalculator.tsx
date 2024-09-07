@@ -108,10 +108,10 @@ export default function RaceCalculator() {
       <div className="max-w-2xl mx-auto bg-white shadow-md rounded-lg p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Your Boat</label>
+            <label className="block text-sm font-medium text-gray-800 mb-1">Your Boat</label>
             <Select onValueChange={(value) => setSelectedBoat(value as BoatName)}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select your boat" />
+              <SelectTrigger className="w-full text-gray-800 !text-opacity-100 text-base">
+                <SelectValue placeholder="Select your boat" className="text-gray-800 !text-opacity-100" />
               </SelectTrigger>
               <SelectContent>
                 {Object.keys(boatRatings.TAUDL).map((boat) => (
@@ -123,9 +123,9 @@ export default function RaceCalculator() {
             </Select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-800 placeholder:text-grey-800 mb-1">Wind Strength</label>
+            <label className="block text-sm font-medium text-gray-800 mb-1">Wind Strength</label>
             <Select onValueChange={(value) => setWindStrength(value as WindStrength)} defaultValue="TAUDL">
-              <SelectTrigger className="w-full text-gray-800 !text-opacity-100">
+              <SelectTrigger className="w-full text-gray-800 !text-opacity-100 text-base">
                 <SelectValue placeholder="Select wind strength" className="text-gray-800 !text-opacity-100" />
               </SelectTrigger>
               <SelectContent>
@@ -137,14 +137,14 @@ export default function RaceCalculator() {
           </div>
         </div>
         <div className="mb-6">
-          <label htmlFor="raceLength" className="block text-sm font-medium text-gray-700 mb-1">Race Length (nautical miles)</label>
+          <label htmlFor="raceLength" className="block text-sm font-medium text-gray-800 mb-1">Race Length (nautical miles)</label>
           <Input
             id="raceLength"
             type="number"
             placeholder="Enter race length"
             value={raceLength}
             onChange={(e) => setRaceLength(e.target.value)}
-            className="text-gray-800 placeholder-gray-800" // Add this line
+            className="text-gray-800 placeholder-gray-500 text-base" // Add text-base here
           />
         </div>
         <Button onClick={calculateTimeDifferences} className="w-full mb-6">
